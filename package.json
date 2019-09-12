@@ -12,6 +12,11 @@
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
     "pug": "^2.0.4",
-    "tingodb": "^0.6.1"
+    "puppeteer": "^1.19.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4",
+    "tingodb": "^0.6.1",
+    "xmldom": "^0.1.27",
+    "xpath": "0.0.27"
   }
 }

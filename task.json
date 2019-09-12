@@ -1,0 +1,39 @@
+{
+  "client": {
+    "local": 1,
+    "type": 11,
+    "version": "1.13.5"
+  },
+  "data": [
+    {
+      "name": "Jobs | Sylabs.io",
+      "uri": "https://sylabs.io/resources/jobs",
+      "config": "{\"includeStyle\":true,\"selections\":[{\"frames\":[{\"index\":0,\"excludes\":[],\"includes\":[{\"expr\":\"/html\",\"type\":\"xpath\"}]}],\"dynamic\":true,\"delay\":0}],\"ignoreEmptyText\":true,\"dataAttr\":\"text\"}",
+      "tags": null,
+      "content_type": 2,
+      "state": 40,
+      "schedule": "{\"type\":\"INTERVAL\",\"params\":{\"interval\":89322}}",
+      "ts": "2019-09-02T14:29:25.621Z"
+    },
+    {
+      "name": "Work at Wildbit | Wildbit",
+      "uri": "https://wildbit.com/jobs",
+      "config": "{\"selections\":[{\"frames\":[{\"index\":0,\"excludes\":[],\"includes\":[{\"type\":\"xpath\",\"expr\":\"//section[@class='jobs-section']/div[contains(@class,'u-container')]\"}]}],\"dynamic\":true,\"delay\":0}],\"ignoreEmptyText\":true,\"includeStyle\":false,\"dataAttr\":\"text\"}",
+      "tags": null,
+      "content_type": 2,
+      "state": 40,
+      "schedule": "{\"type\":\"INTERVAL\",\"params\":{\"interval\":89322}}",
+      "ts": "2019-09-02T14:30:39.356Z"
+    },
+    {
+      "name": "#epicjobs",
+      "uri": "https://epicjobs.co/",
+      "config": "{\"selections\":[{\"frames\":[{\"index\":0,\"excludes\":[],\"includes\":[{\"type\":\"xpath\",\"expr\":\"//div[@id='big-hug']\"}]}],\"dynamic\":true,\"delay\":0}],\"ignoreEmptyText\":true,\"includeStyle\":false,\"dataAttr\":\"text\"}",
+      "tags": [],
+      "content_type": 2,
+      "state": 40,
+      "schedule": "{\"type\":\"INTERVAL\",\"params\":{\"interval\":89322}}",
+      "ts": "2019-08-27T11:14:05.821Z"
+    }
+  ]
+}
