@@ -1,10 +1,13 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const puppeteer = require('puppeteer');
-var xpath = require('xpath')
-  , dom = require('xmldom').DOMParser
+const xpath = require('xpath');
+const dom = require('xmldom').DOMParser;
 
-/* GET users listing. */
+const task = require('../task.json');
+const sampleConfigs = JSON.parse(JSON.stringify(task));
+
+/*  job apis. */
 router.get('/', function(req, res, next) {
 
     const $ = require('cheerio');
@@ -33,5 +36,17 @@ router.get('/', function(req, res, next) {
         //handle error
       });
 });
+
+router.get('/configs', function(req, res, next) {
+    const url = req.query.url;
+    const configDatas = sampleConfigs.data;
+
+    if(url) {
+        const result = configDatas.filter((data)=>data.uri=== url)[0];
+        res.send(result);
+    } else {
+        res.send(configDatas);
+    }
+ });
 
 module.exports = router;
