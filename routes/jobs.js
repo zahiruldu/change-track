@@ -55,7 +55,14 @@ router.get('/configs', function(req, res) {
 
             Helper.getChangeData(url, exp.expr).then((node)=>{
                 console.log(node)
-                res.send(node.toString())
+                rule.dataAttr = node.toString();
+                var d = new Date();
+                var n = d.toISOString();
+                let newObj = Object.assign(config,{config: rule,ts: n});
+                Helper.saveData(newObj,(result)=>{
+                    console.log(result);
+                });
+               // res.send(node.toString())
             });
         } else {
             res.send('config not found');
@@ -65,6 +72,14 @@ router.get('/configs', function(req, res) {
         res.send('url is missing!');
     }
  });
+
+ router.get('/jobs', function(req, res) {
+
+    Helper.getJobs(null,(data)=>{
+        res.send(data);
+    })
+   
+});
 
 
 module.exports = router;

@@ -2,6 +2,7 @@
 const puppeteer = require('puppeteer');
 const xpath = require('xpath');
 const dom = require('xmldom').DOMParser;
+const db = require('../database');
 
 exports.getChangeData = (url, rule)=> {
 
@@ -27,5 +28,21 @@ exports.getChangeData = (url, rule)=> {
       });
   });
 };
+
+exports.saveData = (data, next)=> {
+    const collection = db.collection("jobs");
+    collection.insert([data], {w:1}, function(err, result) {
+        next(result);
+    });
+}
+
+
+exports.getJobs = (url, next)=> {
+    const collection = db.collection("jobs");
+    collection.find({}).toArray( function(err, item) {
+       next(item);
+    });
+
+}
 
 module.exports = exports;
