@@ -9,14 +9,14 @@ const sampleConfigs = JSON.parse(JSON.stringify(task));
 const Helper = require('../helpers/helper');
 
 /*  job apis. */
-router.get('/', function(req, res) {
+router.get('/', (req, res)=> {
 
     res.send('Send url with proper Endpoint!');
    
 });
 
 
-router.get('/configs', function(req, res) {
+router.get('/configs', (req, res)=> {
     const url = req.query.url;
     const configDatas = sampleConfigs.data;
 
@@ -29,7 +29,7 @@ router.get('/configs', function(req, res) {
  });
 
 
- router.get('/rules', function(req, res) {
+ router.get('/rules', (req, res)=> {
     const url = req.query.url;
     const configDatas = sampleConfigs.data;
 
@@ -42,9 +42,12 @@ router.get('/configs', function(req, res) {
     }
  });
 
- router.get('/status', function(req, res) {
+ router.get('/status', async(req, res)=> {
     const url = req.query.url;
     const configDatas = sampleConfigs.data;
+
+    let dbRecord;
+    await Helper.getJob(url,(data)=>dbRecord = data);
 
     if(url) {
         let config = configDatas.filter((data)=>data.uri=== url)[0];
@@ -59,10 +62,16 @@ router.get('/configs', function(req, res) {
                 var d = new Date();
                 var n = d.toISOString();
                 let newObj = Object.assign(config,{config: rule,ts: n});
-                Helper.saveData(newObj,(result)=>{
-                    console.log(result);
-                });
-               // res.send(node.toString())
+                console.log()
+
+                if(dbRecord && dbRecord.config.dataAttr === node.toString()) {
+                    res.send('No New chage');
+                } else {
+                    Helper.saveData(newObj,(result)=>{
+                        console.log(result);
+                        res.send(node.toString())
+                    });
+                }
             });
         } else {
             res.send('config not found');
@@ -73,9 +82,8 @@ router.get('/configs', function(req, res) {
     }
  });
 
- router.get('/jobs', function(req, res) {
-
-    Helper.getJobs(null,(data)=>{
+ router.get('/jobs', (req, res)=> {
+    Helper.getJobs((data)=>{
         res.send(data);
     })
    

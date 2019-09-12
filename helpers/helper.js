@@ -37,12 +37,18 @@ exports.saveData = (data, next)=> {
 }
 
 
-exports.getJobs = (url, next)=> {
+exports.getJobs = (next)=> {
     const collection = db.collection("jobs");
     collection.find({}).toArray( function(err, item) {
        next(item);
     });
+}
 
+exports.getJob = (url, next)=> {
+    const collection = db.collection("jobs");
+    collection.findOne({uri: url}, function(err, item) {
+       next(item);
+    });
 }
 
 module.exports = exports;
