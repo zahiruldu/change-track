@@ -6,38 +6,17 @@ const dom = require('xmldom').DOMParser;
 
 const task = require('../task.json');
 const sampleConfigs = JSON.parse(JSON.stringify(task));
+const Helper = require('../helpers/helper');
 
 /*  job apis. */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
 
-    const $ = require('cheerio');
-    const url = 'https://www.google.com';
-    
-    puppeteer
-      .launch({headless: true})
-      .then(function(browser) {
-        return browser.newPage();
-      })
-      .then(function(page) {
-        return page.goto(url).then(function() {
-          return page.content();
-        });
-      })
-      .then(function(html) {
-
-        var doc = new dom().parseFromString(html)
-
-        var nodes = xpath.select('//title', doc);
-        console.log(nodes);
-        console.log(nodes[0].localName + ": " + nodes[0].firstChild.data);
-        console.log("Node: " + nodes[0].toString())
-      })
-      .catch(function(err) {
-        //handle error
-      });
+    res.send('Send url with proper Endpoint!');
+   
 });
 
-router.get('/configs', function(req, res, next) {
+
+router.get('/configs', function(req, res) {
     const url = req.query.url;
     const configDatas = sampleConfigs.data;
 
@@ -48,5 +27,44 @@ router.get('/configs', function(req, res, next) {
         res.send(configDatas);
     }
  });
+
+
+ router.get('/rules', function(req, res) {
+    const url = req.query.url;
+    const configDatas = sampleConfigs.data;
+
+    if(url) {
+        let result = configDatas.filter((data)=>data.uri=== url)[0];
+        res.send(result.config);
+    } else {
+        let rules  = configDatas.map((data)=>data.config)
+        res.send(rules);
+    }
+ });
+
+ router.get('/status', function(req, res) {
+    const url = req.query.url;
+    const configDatas = sampleConfigs.data;
+
+    if(url) {
+        let config = configDatas.filter((data)=>data.uri=== url)[0];
+
+        if(config) {
+            let rule = JSON.parse(config.config);
+            let exp = rule.selections[0].frames[0].includes[0];
+
+            Helper.getChangeData(url, exp.expr).then((node)=>{
+                console.log(node)
+                res.send(node.toString())
+            });
+        } else {
+            res.send('config not found');
+        }
+        
+    } else {
+        res.send('url is missing!');
+    }
+ });
+
 
 module.exports = router;
