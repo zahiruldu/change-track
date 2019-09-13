@@ -10,9 +10,10 @@ const Helper = require('../helpers/helper');
 
 /*  job apis. */
 router.get('/', (req, res)=> {
+    res.send({
+      message: 'Send url with proper Endpoint!'
+    });
 
-    res.send('Send url with proper Endpoint!');
-   
 });
 
 
@@ -57,36 +58,40 @@ router.get('/configs', (req, res)=> {
             let exp = rule.selections[0].frames[0].includes[0];
 
             Helper.getChangeData(url, exp.expr).then((node)=>{
-                console.log(node)
                 rule.dataAttr = node.toString();
                 var d = new Date();
                 var n = d.toISOString();
                 let newObj = Object.assign(config,{config: rule,ts: n});
-                console.log()
 
                 if(dbRecord && dbRecord.config.dataAttr === node.toString()) {
-                    res.send('No New chage');
+                    // Sending old configs when no changes found
+                    Helper.getChangesets(url,(data)=>{
+                        res.send(data);
+                    });
                 } else {
+                    // Saving new data
                     Helper.saveData(newObj,(result)=>{
-                        console.log(result);
-                        res.send(node.toString())
+                        // Sending all chnagessets
+                        Helper.getChangesets(url,(data)=>{
+                            res.send(data);
+                        });
+                        
                     });
                 }
             });
         } else {
-            res.send('config not found');
+            res.send({message: 'config not found for this url'});
         }
         
     } else {
-        res.send('url is missing!');
+        res.send({message: 'url is missing!'});
     }
  });
 
  router.get('/jobs', (req, res)=> {
     Helper.getJobs((data)=>{
         res.send(data);
-    })
-   
+    });
 });
 
 

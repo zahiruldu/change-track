@@ -44,6 +44,13 @@ exports.getJobs = (next)=> {
     });
 }
 
+exports.getChangesets = (url, next)=> {
+    const collection = db.collection("jobs");
+    collection.find({uri: url}).toArray( function(err, item) {
+       next(item);
+    });
+}
+
 exports.getJob = (url, next)=> {
     const collection = db.collection("jobs");
     collection.findOne({uri: url}, function(err, item) {
