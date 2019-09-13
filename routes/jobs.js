@@ -13,7 +13,6 @@ router.get('/', (req, res)=> {
     res.send({
       message: 'Send url with proper Endpoint!'
     });
-
 });
 
 
