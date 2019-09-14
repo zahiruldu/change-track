@@ -1,8 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const puppeteer = require('puppeteer');
-const xpath = require('xpath');
-const dom = require('xmldom').DOMParser;
 
 const task = require('../task.json');
 const sampleConfigs = JSON.parse(JSON.stringify(task));
