@@ -109,3 +109,56 @@ describe('/api/rules', () => {
         });
   });
 });
+
+
+describe('/api/status', () => {
+  it('it should return message "url is missing!" ', (done) => {
+    chai.request(server)
+        .get('/api/status')
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message');
+          expect(res.body.message).to.be.a('string');
+          expect(res.body.message).to.equal('url is missing!');
+          done();
+        });
+  });
+
+  it('it should return message "config not found for this url" when unkwon url sent', (done) => {
+    let url = 'https://wildbit.com/jobss';
+    chai.request(server)
+        .get('/api/status')
+        .query({url: url})
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message');
+          expect(res.body.message).to.be.a('string');
+          expect(res.body.message).to.equal('config not found for this url');
+          done();
+        });
+  });
+
+  it('it should return changesets  data of a valid url', function(done) {
+    this.timeout(10000);
+  
+    let url = 'https://wildbit.com/jobs';
+    chai.request(server)
+        .get('/api/status')
+        .query({url: url})
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('array');
+          res.body[0].should.have.property('name');
+          res.body[0].should.have.property('uri');
+          res.body[0].should.have.property('config');
+          res.body[0].should.have.property('tags');
+          res.body[0].should.have.property('content_type');
+          res.body[0].should.have.property('state');
+          res.body[0].should.have.property('schedule');
+          res.body[0].should.have.property('ts');
+          done();
+        });
+  });
+});
