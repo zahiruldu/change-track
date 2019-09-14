@@ -115,7 +115,7 @@ describe('/api/status', () => {
     chai.request(server)
         .get('/api/status')
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(400);
           res.body.should.be.a('object');
           res.body.should.have.property('message');
           expect(res.body.message).to.be.a('string');
@@ -130,7 +130,7 @@ describe('/api/status', () => {
         .get('/api/status')
         .query({url: url})
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(400);
           res.body.should.be.a('object');
           res.body.should.have.property('message');
           expect(res.body.message).to.be.a('string');

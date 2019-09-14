@@ -80,11 +80,11 @@ router.get('/configs', (req, res)=> {
                 }
             });
         } else {
-            res.send({message: 'config not found for this url'});
+            res.status(400).send({message: 'config not found for this url'});
         }
         
     } else {
-        res.send({message: 'url is missing!'});
+        res.status(400).send({message: 'url is missing!'});
     }
  });
 

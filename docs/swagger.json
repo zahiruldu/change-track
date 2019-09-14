@@ -137,6 +137,12 @@
             "schema": {
               "$ref": "#/definitions/Config"
             }
+          },
+          "400": {
+            "description": "URL is invalid or missing",
+            "schema": {
+              "$ref":"#/definitions/DefaultResponse"
+            }
           }
         }
       }
