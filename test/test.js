@@ -73,3 +73,39 @@ describe('/api/configs', () => {
         });
   });
 });
+
+describe('/api/rules', () => {
+  it('it should return all rules of sites ', (done) => {
+    chai.request(server)
+        .get('/api/rules')
+        .end((err, res) => {
+          res.should.have.status(200);
+          let config = res.body;
+          config.should.be.a('array');
+          config[0].should.be.a('object');
+          config[0].should.have.property('selections');
+          config[0].should.have.property('ignoreEmptyText');
+          config[0].should.have.property('includeStyle');
+          config[0].should.have.property('dataAttr');
+          config[0].selections.should.be.a('array');
+          done();
+        });
+  });
+
+  it('it should return a rule of sample url config', (done) => {
+    let url = 'https://wildbit.com/jobs';
+    chai.request(server)
+        .get('/api/rules')
+        .query({url: url})
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('object');
+          res.body.should.have.property('selections');
+          res.body.should.have.property('ignoreEmptyText');
+          res.body.should.have.property('includeStyle');
+          res.body.should.have.property('dataAttr');
+          res.body.selections.should.be.a('array');
+          done();
+        });
+  });
+});

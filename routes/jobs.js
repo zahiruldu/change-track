@@ -35,9 +35,10 @@ router.get('/configs', (req, res)=> {
 
     if(url) {
         let result = configDatas.filter((data)=>data.uri=== url)[0];
-        res.send(result.config);
+        
+        res.send(JSON.parse(result.config));
     } else {
-        let rules  = configDatas.map((data)=>data.config)
+        let rules  = configDatas.map((data)=>JSON.parse(data.config))
         res.send(rules);
     }
  });
