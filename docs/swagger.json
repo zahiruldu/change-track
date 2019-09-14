@@ -41,6 +41,137 @@
           }
         }
       }
+    },
+    "/api/configs": {
+      "get": {
+        "tags": [
+          "api"
+        ],
+        "summary": "Get configs available",
+        "description": "Get available configs",
+        "operationId": "configs",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {  
+            "name":"url",
+            "in":"query",
+            "description":"URL that need its data.",
+            "required":false,
+            "type":"string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/AllConfigs"
+            }
+          }
+        }
+      }
+    },
+    "/api/rules": {
+      "get": {
+        "tags": [
+          "api"
+        ],
+        "summary": "Get config rules available",
+        "description": "Get available config rules or single rule of a url",
+        "operationId": "rules",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {  
+            "name":"url",
+            "in":"query",
+            "description":"URL that need its data.",
+            "required":false,
+            "type":"string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Config"
+            }
+          }
+        }
+      }
+    },
+    "/api/status": {
+      "get": {
+        "tags": [
+          "api"
+        ],
+        "summary": "Get changesets of website",
+        "description": "Get changesets of a given url",
+        "operationId": "status",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {  
+            "name":"url",
+            "in":"query",
+            "description":"URL that need its data.",
+            "required": true,
+            "type":"string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Config"
+            }
+          }
+        }
+      }
+    },
+    "/api/jobs": {
+      "get": {
+        "tags": [
+          "api"
+        ],
+        "summary": "Get changesets of all website",
+        "description": "Get changesets of all websuites stored",
+        "operationId": "jobs",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/AllConfigs"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -51,6 +182,105 @@
           "type": "string"
         }
       }
+    },
+    "Frame": {
+      "type": "object",
+      "properties": {
+        "index": {
+          "type": "number"
+        },
+        "excludes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "includes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "proerties": {
+              "expr": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "Selections": {
+      "type": "object",
+      "properties": {
+        "frames": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Frame"
+          }
+        },
+        "dynamic": {
+          "type": "boolean"
+        },
+        "delay": {
+          "type": "number"
+        }
+      }
+    },
+    "Config": {
+      "type": "object",
+      "properties": {
+        "includeStyle": {
+          "type": "boolean"
+        },
+        "selections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Selections"
+          }
+        },
+        "ignoreEmptyText": {
+          "type": "boolean"
+        },
+        "dataAttr": {
+          "type": "string"
+        }
+      }
+    },
+    "WebInfo": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "uri": {
+          "type": "string"
+        },
+        "config": {
+          "type": "object",
+          "$ref": "#/definitions/Config"
+        },
+        "tags": {
+          "type": "string"
+        },
+        "content_type": {
+          "type": "number"
+        },
+        "state": {
+          "type": "number"
+        },
+        "schedule": {
+          "type": "object"
+        },
+        "ts": {
+          "type": "string"
+        }
+      }
+    },
+    "AllConfigs": {
+      "type":"array",
+      "items":{"$ref":"#/definitions/WebInfo"}
     }
   }
 }
