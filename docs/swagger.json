@@ -45,10 +45,10 @@
     "/api/configs": {
       "get": {
         "tags": [
-          "api"
+          "configs"
         ],
         "summary": "Get configs available",
-        "description": "Get available configs",
+        "description": "Get available configs or config of a given url. e.g. https://wildbit.com/jobs",
         "operationId": "configs",
         "consumes": [
           "application/json",
@@ -58,15 +58,13 @@
           "application/json",
           "application/xml"
         ],
-        "parameters": [
-          {  
-            "name":"url",
-            "in":"query",
-            "description":"URL that need its data.",
-            "required":false,
-            "type":"string"
-          }
-        ],
+        "parameters": [{
+          "name": "url",
+          "in": "query",
+          "description": "URL that need its data.",
+          "required": false,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "successful operation",
@@ -80,10 +78,10 @@
     "/api/rules": {
       "get": {
         "tags": [
-          "api"
+          "rules"
         ],
         "summary": "Get config rules available",
-        "description": "Get available config rules or single rule of a url",
+        "description": "Get available config rules or single rule of a url. e.g https://wildbit.com/jobs",
         "operationId": "rules",
         "consumes": [
           "application/json",
@@ -93,15 +91,13 @@
           "application/json",
           "application/xml"
         ],
-        "parameters": [
-          {  
-            "name":"url",
-            "in":"query",
-            "description":"URL that need its data.",
-            "required":false,
-            "type":"string"
-          }
-        ],
+        "parameters": [{
+          "name": "url",
+          "in": "query",
+          "description": "URL that need its data.",
+          "required": false,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "successful operation",
@@ -115,10 +111,10 @@
     "/api/status": {
       "get": {
         "tags": [
-          "api"
+          "status"
         ],
         "summary": "Get changesets of website",
-        "description": "Get changesets of a given url",
+        "description": "Get changesets of a given url e.g. https://wildbit.com/jobs",
         "operationId": "status",
         "consumes": [
           "application/json",
@@ -128,15 +124,13 @@
           "application/json",
           "application/xml"
         ],
-        "parameters": [
-          {  
-            "name":"url",
-            "in":"query",
-            "description":"URL that need its data.",
-            "required": true,
-            "type":"string"
-          }
-        ],
+        "parameters": [{
+          "name": "url",
+          "in": "query",
+          "description": "URL that need its data.",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "successful operation",
@@ -150,7 +144,7 @@
     "/api/jobs": {
       "get": {
         "tags": [
-          "api"
+          "jobs"
         ],
         "summary": "Get changesets of all website",
         "description": "Get changesets of all websuites stored",
@@ -279,8 +273,10 @@
       }
     },
     "AllConfigs": {
-      "type":"array",
-      "items":{"$ref":"#/definitions/WebInfo"}
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/WebInfo"
+      }
     }
   }
 }
