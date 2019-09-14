@@ -1,5 +1,4 @@
 const expect = require('chai').expect;
-
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../app');
@@ -7,7 +6,7 @@ const should = chai.should();
 
 chai.use(chaiHttp);
 
-//==================== API test ====================
+//==================== API tests ====================
 
 describe('/ server running test', () => {
   it('it should visit the server running on http://localhost:3000 ', (done) => {
@@ -147,6 +146,34 @@ describe('/api/status', () => {
     chai.request(server)
         .get('/api/status')
         .query({url: url})
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('array');
+          res.body[0].should.have.property('name');
+          res.body[0].should.have.property('uri');
+          res.body[0].should.have.property('config');
+          res.body[0].should.have.property('tags');
+          res.body[0].should.have.property('content_type');
+          res.body[0].should.have.property('state');
+          res.body[0].should.have.property('schedule');
+          res.body[0].should.have.property('ts');
+
+          res.body[0].config.should.be.a('object');
+          res.body[0].config.should.have.property('selections');
+          res.body[0].config.should.have.property('ignoreEmptyText');
+          res.body[0].config.should.have.property('includeStyle');
+          res.body[0].config.should.have.property('dataAttr');
+          res.body[0].config.selections.should.be.a('array');
+          done();
+        });
+  });
+});
+
+
+describe('/jobs', () => {
+  it('it should retrun all the chnagessets of all urls ', (done) => {
+    chai.request(server)
+        .get('/api/jobs')
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('array');
