@@ -17,6 +17,7 @@
     "puppeteer": "^1.19.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
+    "swagger-ui-express": "^4.1.0",
     "tingodb": "^0.6.1",
     "xmldom": "^0.1.27",
     "xpath": "0.0.27"
